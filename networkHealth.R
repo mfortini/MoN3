@@ -1,7 +1,11 @@
 require(igraph)
 require(lubridate)
+require(rgexf)
 
-networkHealth <- function(g) {
+networkHealth <- function(filegexf) {
+
+  g <- gexf.to.igraph(read.gexf(filegexf))
+
   teamNodes = as.numeric(V(g)[team==TRUE])
   modEdges = c(unlist(mapply(teamNodes,FUN=function(n){incident(g,n,mode='out')})))
   E(g)$moderator=FALSE
